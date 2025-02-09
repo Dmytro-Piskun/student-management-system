@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+  enum Role {
+    TEACHER
+    STUDENT
+  }
+
+  model User {
+    id        String   @id @default(cuid())
+    username  String   @unique
+    password  String
+    role      Role
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    teacher   Teacher?
+    student   Student?
+  }
+
+  model Teacher {
+    id       String    @id @default(cuid())
+    userId   String    @unique
+    user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    subjects Subject[]
+    students Student[]
+  }
+
+  model Student {
+    id          String       @id @default(cuid())
+    userId      String       @unique
+    user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+    submissions Submission[]
+    teacher     Teacher?     @relation(fields: [teacherId], references: [id])
+    teacherId   String?
+  }
+
+  model Subject {
+    id          String       @id @default(cuid())
+    name        String
+    createdAt   DateTime     @default(now())
+    updatedAt   DateTime     @updatedAt
+    teacher     Teacher      @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+    teacherId   String
+    assignments Assignment[]
+
+    @@unique([name, teacherId])
+  }
+
+  model Assignment {
+    id           String       @id @default(cuid())
+    title        String
+    instructions String       @db.Text
+    dueDate      DateTime
+    createdAt    DateTime     @default(now())
+    updatedAt    DateTime     @updatedAt
+    subject      Subject      @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+    subjectId    String
+    submissions  Submission[]
+
+    @@unique([title, subjectId])
+  }
+
+  model Submission {
+    id           String     @id @default(cuid())
+    content      String     @db.Text
+    grade        Int?       
+    createdAt    DateTime   @default(now())
+    updatedAt    DateTime   @updatedAt
+    student      Student    @relation(fields: [studentId], references: [id], onDelete: Cascade)
+    studentId    String
+    assignment   Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+    assignmentId String
+
+    @@unique([studentId, assignmentId])
+  }
+
