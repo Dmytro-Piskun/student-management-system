@@ -1,22 +1,22 @@
 # Student Management System
 
-## 📌 Overview
+##  Overview
 A student management system built with Next.js, Prisma, and JavaScript, designed to handle student and teacher roles. Students can view subjects and assignments, upload and remove assignments, while teachers can manage students, subjects, and grade submissions.
 
-## 🚀 Features
+## Features
 ### 🎓 Student Features:
 - Login with credentials provided by teachers.
 - View dashboard, subjects, and assignments.
 - Upload and remove assignments.
 
-### 👨‍🏫 Teacher Features:
+### Teacher Features:
 - Register with a username and password.
 - Manage subjects and students.
 - Assign credentials to students.
 - Create and manage assignments.
 - Grade student submissions.
 
-## 🏗️ Tech Stack
+## Tech Stack
 - **Frontend:** Next.js (App Router)
 - **Database:** Prisma ORM
 - **Backend:** Next.js Server Actions
