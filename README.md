@@ -9,7 +9,7 @@ A student management system built with Next.js, Prisma, and JavaScript, designed
 - View dashboard, subjects, and assignments.
 - Upload and remove assignments.
 
-### Teacher Features:
+### 👨🏻‍🎓 Teacher Features:
 - Register with a username and password.
 - Manage subjects and students.
 - Assign credentials to students.
